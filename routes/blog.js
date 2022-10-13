@@ -7,14 +7,17 @@ destination: function (req, file, cb) {
     cb(null, './images')
   },
   filename: function (req, file, cb) {
-    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    uniquename.push(uniqueName + '-' + file.originalname)
-    cb(null, uniqueName + '-' + file.originalname)
+    const uniqueName = date + '-' + req.body.title.slice(0,5) + '-' + count + file.originalname.slice(-4);
+    count++;
+    uniquename.push(uniqueName)
+    cb(null, uniqueName)
   }
 })
 const upload = multer({ storage : storage })
 
 let uniquename=[]
+let count= 0
+let date= new Date().toLocaleDateString("en-CA") 
 
 router.post('/add',upload.array('images',5) ,async (req, res) => {
   try {
