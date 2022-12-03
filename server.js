@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
 const express = require('express')
-const blogsRouter = require("./routes/blogs")
-const blogRouter = require("./routes/blog")
-const imageRouter = require("./routes/images")
+const blogsRouter = require('./routes/blogs')
+const blogRouter = require('./routes/blog')
+const imageRouter = require('./routes/images')
+const cors = require('cors')
 require('dotenv').config()
 
 const app = express()
@@ -18,9 +19,15 @@ mongoose.connect(
     console.log('connected to database')
   }
 )
-app.use("/blogs",blogsRouter)
-app.use("/blog",blogRouter)
-app.use("/image",imageRouter)
+app.use(
+  cors({
+    origin: '*',
+    optionsSuccessStatus: 200,
+  })
+)
+app.use('/blogs', blogsRouter)
+app.use('/blog', blogRouter)
+app.use('/image', imageRouter)
 
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port} `)

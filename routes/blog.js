@@ -3,23 +3,23 @@ const fs = require('fs')
 const Blog = require('../model/blog')
 const multer = require('multer')
 const storage = multer.diskStorage({
-destination: function (req, file, cb) {
+  destination: function(req, file, cb) {
     cb(null, './images')
   },
-  filename: function (req, file, cb) {
-    const uniqueName = date + '-' + req.body.title.slice(0,5) + '-' + count + file.originalname.slice(-4);
+  filename: function(req, file, cb) {
+    let date = new Date().toLocaleDateString("en-CA")
+    const uniqueName = date + '-' + req.body.title.slice(0, 5) + '-' + count + file.originalname.slice(-4);
     count++;
     uniquename.push(uniqueName)
     cb(null, uniqueName)
   }
 })
-const upload = multer({ storage : storage })
+const upload = multer({ storage: storage })
 
-let uniquename=[]
-let count= 0
-let date= new Date().toLocaleDateString("en-CA") 
+let uniquename = []
+let count = 0
 
-router.post('/add',upload.array('images',5) ,async (req, res) => {
+router.post('/add', upload.array('images', 5), async (req, res) => {
   try {
     console.log(uniquename)
     const blog = new Blog({
@@ -32,6 +32,8 @@ router.post('/add',upload.array('images',5) ,async (req, res) => {
       images: uniquename
     })
     await Blog.create(blog)
+    uniquename = []
+    count = 0
     res.status(200).end()
   } catch (err) {
     res.status(500).json(err.message)
@@ -49,13 +51,13 @@ router.get('/:id', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
   try {
     const id = req.params.id
-    const imageName = await Blog.find({'_id':id}).select('images')
-    imageName[0].images.forEach( (image) => {
-          fs.unlink(`./images/${image}`,(err)=>{
+    const imageName = await Blog.find({ '_id': id }).select('images')
+    imageName[0].images.forEach((image) => {
+      fs.unlink(`./images/${image}`, (err) => {
         if (err) console.log(err)
       })
     });
-    await Blog.remove({'_id':id})
+    await Blog.remove({ '_id': id })
     res.status(200).end()
   } catch (err) {
     res.status(500).json(err.message)
@@ -64,7 +66,7 @@ router.delete('/delete/:id', async (req, res) => {
 router.put('/update/:id', async (req, res) => {
   try {
     const id = req.params.id
-    await Blog.update({'_id':id},req.body)
+    await Blog.update({ '_id': id }, req.body)
     res.status(200).end()
   } catch (err) {
     res.status(500).json(err.message)
