@@ -10,16 +10,16 @@ router.get('/', async (req, res) => {
     let genre = req.query.genre || 'All'
 
     const genreOptions = [
-      'Hacking',
-      'Coding',
-      'Neovim',
-      'Tech Trends',
-      'Artificial Intelligence',
-      'Product Reviews',
-      'Tutorials',
-      'Programming Languages',
-      'Tech Conferences',
-      'News in Tech',
+      'hacking',
+      'coding',
+      'neovim',
+      'tech Trends',
+      'artificial Intelligence',
+      'product Reviews',
+      'tutorials',
+      'programming Languages',
+      'tech Conferences',
+      'news in Tech',
     ]
 
     genre === 'All'
