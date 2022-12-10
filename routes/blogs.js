@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const search = req.query.search || ''
     let sort = parseInt(req.query.sort) || -1
     let genre = req.query.genre || 'All'
-
+    let pageno=[1]
     const genreOptions = [
       'hacking',
       'coding',
@@ -39,6 +39,12 @@ router.get('/', async (req, res) => {
       title: { $regex: search, $options: 'i' },
     })
 
+     let totalpage = total / limit
+      if (totalpage > 1) {
+        for (let i = 1; i < totalpage; i++) {
+          pageno.push(i + 1)
+        }
+      }
     const response = {
       error: false,
       total,
@@ -46,6 +52,7 @@ router.get('/', async (req, res) => {
       limit,
       genres: genreOptions,
       blogs,
+      pageno,
     }
     res.status(200).json(response)
   } catch (err) {
