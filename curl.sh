@@ -1,1 +1,0 @@
-curl -X POST -F title="Eighth Blog Post" -F discription="This is the log decription of the blog " -F  markdown="this is a valuid markdown of a blog posin such mannger you cannot n9tice it it hapoens " -F genre=Coding -F images=@images/potrait.jpg -F  images=@images/potrait.jpg http://localhost:4040/blog/add

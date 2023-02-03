@@ -9,16 +9,24 @@ require('dotenv').config()
 const app = express()
 const port = 4040
 
-mongoose.connect(
-  process.env.BLOGDB_CONNECTION_URL,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log('connected to database')
-  }
-)
+try {
+  mongoose.connect(
+    process.env.BLOGDB_CONNECTION_URL,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+    () => {
+      console.log('connected to mongoose')
+    }
+  )
+}
+catch (err) {
+  console.log("could not connect");
+}
+const dbConnection = mongoose.connection;
+dbConnection.on("error", (err) => console.log(`Connection error ${err}`));
+dbConnection.once("open", () => console.log("Connected to DB!"));
 app.use(
   cors({
     origin: '*',
