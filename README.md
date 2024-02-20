@@ -19,24 +19,24 @@ This repository contains a RESTful API built with Express.js and MongoDB, design
 ### Setup:
 
 1. **Clone the Repository:**
-   ```
+   ```bash
    git clone https://github.com/HaroonSaifi17/BlogApi.git
    ```
 
 2. **Install Dependencies:**
-   ```
+   ```bash
    npm install
    ```
 
 3. **Set Environment Variables:**
    Create a `.env` file in the root directory and define the following variables:
-   ``` 
+   ```env
    PORT=3000
    MONGODB_URI=your_mongodb_uri
    ```
 
 4. **Run the Server:**
-   ```
+   ```bash
    npm start
    ```
 
